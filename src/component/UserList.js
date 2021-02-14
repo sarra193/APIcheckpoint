@@ -1,33 +1,55 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-
+import './UserList.css'
 const UserList = () => {
-    const [data, setData] = useState()
-     /*    useEffect(() => {
-            function fetchData() {
-                  fetch("https://jsonplaceholder.typicode.com/users")
-                  .then(res => setData(res))
-                  .catch(err=>setError(err))
-
+    const [users, setUsers] = useState([])
+   
+      const getUser = async () => {
+            try {
+                  const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+                  console.log(response);
+                  setUsers(response.data);
+                  
+            } catch (err) {
+                  console.log("error", err);
             }
-            fetchData();
-      }, []) */
-    /*   fetch('https://jsonplaceholder.typicode.com/users')
-  .then(response => response.json())
-            .then(json => console.log(json)) */
-      
-
-      axios({
-            url:'https://jsonplaceholder.typicode.com/users'
-      }) 
-            .then((response) => {
-                  setData(response.data )
-            console.log(response)
-      })
+      }
+      useEffect(() => {
+            getUser();  
+      },[])
 
       return (
-            <div>
-                  
+            <div  className="flex">
+            {users.map((user,i) => (
+                        
+                  <div key={i}>
+                                                
+                  <div className="card">
+                  <div className="card-text">
+                  <span className="date">phone:{ user.phone}</span>
+                                    <h2> {user.name}</h2>
+                              
+                                    <p>email: {user.email}</p><br />
+                                    <p>website: { user.website}</p>
+                        <p> address:{ user.address.street} { user.address.suite} { user.address.city} { user.address.zipcode}</p>
+                  </div>
+                  <div className="card-stats">
+                  <div className="stat">
+                        <div className="value">Company:</div>
+                        <div className="type">{user.company.name}</div>
+                  </div>
+                  <div className="stat border">
+                        <div className="value">catchPhrase:</div>
+                        <div className="type">{user.company.catchPhrase}</div>
+                  </div>
+                  <div className="stat">
+                        <div className="value">bs:</div>
+                        <div className="type">{user.company.bs}</div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  ))}
             </div>
       )
 }

@@ -1,11 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import UserList from './component/UserList';
+import bg from './bg.jpg'
+import NavBar from './component/NavBar';
 
 function App() {
   return (
-    <div className="App">
-      <UserList/>
+    <div style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat ', backgroundSize: 'cover' }}>
+      <NavBar/>
+      <UserList />
     </div>
   );
 }
